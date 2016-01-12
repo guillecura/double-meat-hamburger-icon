@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+// Double Meat Hamburger Icon main styles
+// -----------------------------------------------------------------------------
+
+// Import all base Sass files
+@import 'base/reset';
+@import 'base/mixins';
+@import 'base/grid';
+
+// Import the components needed
+@import 'components/dmh-icon';

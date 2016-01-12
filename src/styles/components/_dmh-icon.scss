@@ -1,0 +1,115 @@
+.dmh-menu {
+// -----------------------------------------------------------------------------
+// Double Meat Hamburger Icon SVG
+// -----------------------------------------------------------------------------
+
+// Variables -------------------------------------------------------------------
+  $size:           32px;
+  $height:         3px;
+
+  $color-base:     rgb(50, 50, 50); // scss-lint:disable ColorVariable
+
+  $color-1:        rgb(148, 43, 131); // scss-lint:disable ColorVariable
+  $color-2:        rgb(16, 121, 194); // scss-lint:disable ColorVariable
+  $color-3:        rgb(230, 160, 54); // scss-lint:disable ColorVariable
+  $color-4:        rgb(232, 80, 50); // scss-lint:disable ColorVariable
+
+  $list:           $color-1 $color-2 $color-3 $color-4; // one for each line
+// -----------------------------------------------------------------------------
+
+// General Styles --------------------------------------------------------------
+  @include cb(appearance, none);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+  display: block;
+  height: $size;
+  outline: 0;
+  width: $size;
+
+  > svg {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+// Lines -----------------------------------------------------------------------
+  rect {
+    display: block;
+    fill: $color-base;
+    height: $height;
+    transform-origin: center;
+    transition: fill 50ms ease-out, width 150ms ease-out, transform 150ms ease-out;
+    width: $size;
+
+    @each $pos-y in $list {
+      $i: index($list, $pos-y);
+
+      &:nth-child(#{$i}) {
+        transform: translateY(#{$height * $i * 2});
+        transition-delay: unquote('#{$i * 50}ms');
+      }
+    }
+  }
+// -----------------------------------------------------------------------------
+
+// Set the hover
+// -----------------------------------------------------------------------------
+  &:hover rect {
+    @each $color in $list {
+      $i: index($list, $color);
+
+// Animation -------------------------------------------------------------------
+      @keyframes bounce-#{$i} {
+        0% {width: #{$size};}
+
+        33% {width: #{$size / $i};}
+
+        66% {width: #{$size / ($i * .333)};}
+
+        100% {width: #{$size / ($i * .666)};}
+      }
+
+// Hover state -----------------------------------------------------------------
+      &:nth-child(#{$i}) {
+        animation: bounce-#{$i} unquote('#{$i * 150}ms') ease-out forwards;
+        fill: #{$color};
+        width: #{$size / ($i * .666)};
+      }
+    }
+  }
+// -----------------------------------------------------------------------------
+
+// Set the on-click state (replace the &:focus selector with the active class)
+// -----------------------------------------------------------------------------
+  // &.active rect,
+  &:focus rect {
+// Animation -------------------------------------------------------------------
+    @keyframes cross-l {
+      0% {transform: translateY(#{($size - $height) / 2});}
+      33% {transform: translateY(#{($size - $height) / 2}) rotate(-45deg);}
+      100% {transform: translateY(#{($size - $height) / 2}) rotate(-45deg);}
+    }
+
+    @keyframes cross-r {
+      0% {transform: translateY(#{($size - $height) / 2});}
+      33% {transform: translateY(#{($size - $height) / 2}) rotate(45deg);}
+      100% {transform: translateY(#{($size - $height) / 2}) rotate(45deg);}
+    }
+
+    &:nth-child(odd) {
+      animation: cross-l .666s ease-out forwards;
+    }
+
+    &:nth-child(even) {
+      animation: cross-r .666s ease-out forwards;
+    }
+  }
+
+  &:focus:hover rect {
+    fill: $color-1;
+    width: #{$size};
+  }
+// -----------------------------------------------------------------------------
+}

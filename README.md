@@ -1,2 +1,2 @@
 # double-meat-hamburger-icon
-Double Meat Hamburger animated SVG icon
+Double Meat Hamburger animated icon made using SVG and CSS.
